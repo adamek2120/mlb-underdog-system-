@@ -1,0 +1,41 @@
+name: MLB Underdog System
+
+on:
+  schedule:
+    # Runs at 11:00 UTC = 6:00am ET (adjust to 10:00 UTC for 6am ET during daylight saving)
+    - cron: '0 11 * * 1,2,4,5'  # Mon, Tue, Thu, Fri
+  workflow_dispatch:  # Allows manual trigger from GitHub UI anytime
+
+jobs:
+  run-mlb-system:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.3.0'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+      - name: Install R packages
+        run: |
+          Rscript -e "install.packages(c('baseballr','oddsapiR','googlesheets4','googledrive',
+            'tidyverse','lubridate','rvest','stringr','knitr','kableExtra'), 
+            repos='https://cloud.r-project.org')"
+
+      - name: Write Google service account key to file
+        run: echo '${{ secrets.GS_SERVICE_KEY }}' > /tmp/gs_key.json
+
+      - name: Run MLB system
+        env:
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          GS_SERVICE_KEY: /tmp/gs_key.json
+        run: |
+          Rscript Scripts/Full_System26.R
