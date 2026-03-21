@@ -30,6 +30,12 @@ rm(path, file1, file2, file3, file4)
 # Merge with schedule.R and standings.R
 #########################################
 
+# Ensure join columns are character type
+today_dog$away_team <- as.character(today_dog$away_team)
+today_dog$home_team <- as.character(today_dog$home_team)
+alldogs$away_team <- as.character(alldogs$away_team)
+alldogs$home_team <- as.character(alldogs$home_team)
+
 today_merged <- today_dog %>%
   left_join(todays_schedule, by = c("away_team" = "AwayTeam")) %>%
   rename("Dog" = "outcomes_name",
