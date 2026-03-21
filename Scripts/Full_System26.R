@@ -214,14 +214,15 @@ home_dog_picks <- home_dog_criteria %>%
 # GoogleSheets
 #######################
 
-# Reads in the variable of the Google Sheet 
-# Replace both gs4_auth() calls with this:
+# Auth both packages with service account
+googledrive::drive_auth(path = Sys.getenv("GS_SERVICE_KEY"))
 gs4_auth(path = Sys.getenv("GS_SERVICE_KEY"))
+
+# Reads in the variable of the Google Sheet 
 atp <- googledrive::drive_get("Underdog System 2026")
 
 
 # Append Tracking Data
-gs4_auth(path = Sys.getenv("GS_SERVICE_KEY"))
 googlesheets4::sheet_append(
   data = tr_merge,
   ss = atp,
