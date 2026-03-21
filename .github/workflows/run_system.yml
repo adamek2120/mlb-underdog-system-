@@ -34,6 +34,14 @@ jobs:
             libtiff5-dev \
             libjpeg-dev
             
+      - name: Cache R packages       
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-4.3.0-${{ hashFiles('**/run_system.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-r-4.3.0-
+            
       - name: Install R packages
         run: |
           Rscript -e "install.packages(c('baseballr','oddsapiR','googlesheets4','googledrive',
