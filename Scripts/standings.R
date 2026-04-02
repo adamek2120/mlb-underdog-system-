@@ -58,7 +58,18 @@ NL_split <- standing_splitNL %>%
 
 team_split <- rbind(AL_split, NL_split)
 
-rm(alstanding, nlstanding, standing_splitAL, standing_splitNL, AL_split, NL_split)
+# Created a table associating each team name in TR with the team name from baseballr to substitute for it:
+team_lkup <- c(Guardians="Cleveland Guardians", Nationals="Washington Nationals", Marlins="Miami Marlins", Braves="Atlanta Braves", Cubs ="Chicago Cubs", Cardinals ="St. Louis Cardinals",
+               Pirates = "Pittsburgh Pirates", Reds = 'Cincinnati Reds', Astros = 'Houston Astros', Brewers ='Milwaukee Brewers', Padres = 'San Diego Padres', `D-backs` = 'Arizona Diamondbacks',
+               Rockies = 'Colorado Rockies', Dodgers = 'Los Angeles Dodgers', Mets = 'New York Mets', Phillies = 'Philadelphia Phillies', Royals = 'Kansas City Royals', `White Sox` = 'Chicago White Sox',
+               Twins = 'Minnesota Twins', Tigers = 'Detroit Tigers', Athletics = 'Athletics', Rangers = 'Texas Rangers', Angels = 'Los Angeles Angels', Mariners = 'Seattle Mariners', 
+               Orioles = 'Baltimore Orioles', `Red Sox` = 'Boston Red Sox', Yankees = 'New York Yankees', `Blue Jays` = 'Toronto Blue Jays', Rays = 'Tampa Bay Rays', Giants = 'San Francisco Giants')
+
+
+
+team_split$team <- as.character(team_lkup[team_split$team])
+
+rm(alstanding, nlstanding, standing_splitAL, standing_splitNL, AL_split, NL_split, team_lkup)
 
 
 
