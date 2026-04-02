@@ -10,14 +10,14 @@ library(baseballr)
 # Get current standings 
 ## AL
 alstanding <- mlb_standings(
-  season = 2025,
+  season = 2026,
   league_id = 103
 )
 alstanding <- alstanding %>% 
   select(team_records_team_name, team_records_runs_allowed, team_records_runs_scored, team_records_run_differential, team_records_streak_streak_type, team_records_streak_streak_number, team_records_records_split_records)
 ## NL
 nlstanding <- mlb_standings(
-  season = 2025,
+  season = 2026,
   league_id = 104
 )
 nlstanding <- nlstanding %>% 
