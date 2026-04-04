@@ -167,14 +167,14 @@ crit1_today <- tr_merge %>%
         (Fav_streak == "losses" | (Fav_streak == "wins" & Fav_streakN <= 1)) &
         (Dog_streak == "wins" | (Dog_streak == "losses" & Dog_streakN <= 3)) &
         as.numeric(Away_Pred_Rank) < 24 &
-        as.numeric(Home_Pred_Rank) - as.numeric(Away_Pred_Rating) < 20 ~ "Met",
+        as.numeric(Home_Pred_Rank) - as.numeric(Away_Pred_Rating) < 20 ~ "Met-Away",
       
       # Dog is the home team
       home_team == Dog &
         (Dog_streak == "losses" | (Dog_streak == "wins" & Dog_streakN <= 1)) &
         (Fav_streak == "wins" | (Fav_streak == "losses" & Fav_streakN <= 3)) &
         as.numeric(Home_Pred_Rank) < 24 &
-        as.numeric(Away_Pred_Rank) - as.numeric(Home_Pred_Rating) < 20 ~ "Met",
+        as.numeric(Away_Pred_Rank) - as.numeric(Home_Pred_Rating) < 20 ~ "Met-Home",
       
       .default = "Not-Met"),
     # Criteria for my original dog system
@@ -191,7 +191,7 @@ crit1_today <- tr_merge %>%
 picks <- crit1_today %>% 
   rename("HomeTeam" = "home_team",
          "AwayTeam" = "away_team") %>% 
-  filter(DT4 == "Met" | Dip == "Met" | Main == "Met" | Petricho == "Met") %>% 
+  filter(DT4 == "Met" | Dip == "Met" | Main == "Met" | Petricho == "Met-Away" | Petricho == "Met-Home") %>% 
   select(Date, HomeTeam, AwayTeam, GameinSeries:SeriesGame, Dog_price, DT4, Dip, Main, Petricho)
 
 # Non_filtered, used especially when picks == 0
