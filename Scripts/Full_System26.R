@@ -156,7 +156,7 @@ crit1_today <- tr_merge %>%
   mutate( # Decision Tree - 4 rules
     DT4 = case_when(away_team == Dog & as.numeric(Dog_away_per) > 0.39 & as.numeric(Away_l10_Rating) > -1.55 &
                       as.numeric(Home_l10_Rating) <= 0.16 & 
-                      (Dog_streak == "losses" & Dog_streakN <= 2) ~ "Met",
+                      (Dog_streak == "losses" | (Dog_streak == "wins" & Dog_streak <= 2)) ~ "Met",
                     .default = "Not-Met"),
     # Buy the Dip model
     Dip = case_when(away_team == Dog & as.numeric(Away_Pred_Rating) >= -0.12 & (Dog_streak == "losses" & Dog_streakN <= 1) ~ "Met",
